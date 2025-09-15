@@ -1,0 +1,206 @@
+[gd_scene load_steps=21 format=3 uid="uid://dkm1asxrk2u6w"]
+
+[ext_resource type="Script" uid="uid://blumtus4dgelp" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://dixafdnqrreje" path="res://player.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://de45o45t5phjp" path="res://mob.tscn" id="2_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://bedg3sfpx23g7" path="res://Street T.glb" id="3_dg77c"]
+[ext_resource type="FontFile" uid="uid://btihdlcv3jahu" path="res://fonts/Montserrat-Medium.ttf" id="4_lquwl"]
+[ext_resource type="Script" uid="uid://drxnj0wffwl0m" path="res://score_label.gd" id="5_7mycd"]
+[ext_resource type="FontFile" uid="uid://csunpy161b10d" path="res://THSarabunNew/THSarabunNew Bold.ttf" id="6_5vw27"]
+[ext_resource type="PackedScene" uid="uid://dpltqpxxlluws" path="res://Street Straight Crack (1).glb" id="9_dg77c"]
+[ext_resource type="PackedScene" uid="uid://d3ga0lr7ljp0q" path="res://Street Straight Crack (2).glb" id="9_kek77"]
+[ext_resource type="PackedScene" uid="uid://jg04u4sur58x" path="res://Traffic Barrier.glb" id="9_ycdy4"]
+[ext_resource type="PackedScene" uid="uid://3iq48je0gecg" path="res://Street Straight.glb" id="10_ycdy4"]
+[ext_resource type="PackedScene" uid="uid://d2ulrgea82f8q" path="res://Street Turn.glb" id="12_w48qg"]
+[ext_resource type="PackedScene" uid="uid://fcxkv2047mpc" path="res://Traffic Light.glb" id="13_vivmo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7dm0k"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ig7tw"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lquwl"]
+albedo_color = Color(1, 0.54902, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_7mycd"]
+material = SubResource("StandardMaterial3D_lquwl")
+
+[sub_resource type="Curve3D" id="Curve3D_272bh"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -25.5508, -1.19353, 20.1734, 0, 0, 0, 0, 0, 0, 24.36, 0, 21.5708, 0, 0, 0, 0, 0, 0, 24.1126, 0, -18.5912, 0, 0, 0, 0, 0, 0, -24.4848, 0, -18.2772, 0, 0, 0, 0, 0, 0, -24.2925, 0, 21.7838),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[sub_resource type="Theme" id="Theme_272bh"]
+default_font = ExtResource("4_lquwl")
+default_font_size = 22
+
+[sub_resource type="LabelSettings" id="LabelSettings_272bh"]
+font = ExtResource("6_5vw27")
+font_size = 22
+font_color = Color(0, 0, 0, 1)
+
+[node name="Main" type="Node"]
+script = ExtResource("1_h2yge")
+mob_scene = ExtResource("2_1bvp3")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_7dm0k")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.590023, 0, 0.131115)
+mesh = SubResource("BoxMesh_ig7tw")
+skeleton = NodePath("../..")
+
+[node name="Root Scene2" parent="Ground/MeshInstance3D" instance=ExtResource("3_dg77c")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.00347519, -2.00275e-06, -18.0058)
+
+[node name="Root Scene" parent="Ground" instance=ExtResource("3_dg77c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.58846, 1, -4.15966)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.583511, 0.374844, -0.720421, -0.686996, 0.245227, 0.684032, 0.433072, 0.894067, 0.114423, 0.337031, 14.6717, 0.234971)
+light_energy = 2.005
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("1_ig7tw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.504199, 0)
+
+[node name="Camerapivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Camerapivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 19)
+projection = 1
+size = 25.0
+
+[node name="Cylinders" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.1853, 0, -18.4452)
+mesh = SubResource("CylinderMesh_7mycd")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.1853, 0, 22.0462)
+mesh = SubResource("CylinderMesh_7mycd")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.1789, 0, -18.4452)
+mesh = SubResource("CylinderMesh_7mycd")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.1789, 0, 22.0462)
+mesh = SubResource("CylinderMesh_7mycd")
+
+[node name="SpawnPath" type="Path3D" parent="."]
+curve = SubResource("Curve3D_272bh")
+
+[node name="SpawnLocation" type="PathFollow3D" parent="SpawnPath"]
+transform = Transform3D(-0.0279869, -0.0238877, -0.999319, 0, 0.999714, -0.023897, 0.999605, -0.000668806, -0.0279789, -25.5508, -1.19353, 20.1734)
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_272bh")
+
+[node name="Retry" type="ColorRect" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 48.24
+anchor_bottom = 27.41
+offset_left = -1.0
+offset_top = -2.0
+offset_right = -7.6001
+offset_bottom = -16.4
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.509804)
+
+[node name="Label" type="Label" parent="UserInterface/Retry"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -109.5
+offset_top = -14.0
+offset_right = 109.5
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press Enter to retry"
+
+[node name="ScoreLabel" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 25.0
+offset_right = 94.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Score: 0"
+script = ExtResource("5_7mycd")
+
+[node name="Label" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 55.0
+offset_right = 241.0
+offset_bottom = 83.0
+text = "663380294-0  วีราทร เจริญศิลป์"
+label_settings = SubResource("LabelSettings_272bh")
+
+[node name="Root Scene" parent="." instance=ExtResource("9_dg77c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.58845, 0.238079, 3.80265)
+
+[node name="Root Scene6" parent="Root Scene" instance=ExtResource("9_ycdy4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.707, 0, -2.78925)
+
+[node name="Root Scene7" parent="Root Scene" instance=ExtResource("10_ycdy4")]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -12.2126, -0.238077, -8.52173)
+
+[node name="Root Scene5" parent="Root Scene/Root Scene7" instance=ExtResource("10_ycdy4")]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 11.7924, 1.00137e-06, -8.47126)
+
+[node name="Root Scene5" parent="Root Scene/Root Scene7/Root Scene5" instance=ExtResource("10_ycdy4")]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0.0505352, 1.00137e-06, 8.01886)
+
+[node name="Root Scene5" parent="Root Scene/Root Scene7/Root Scene5/Root Scene5" instance=ExtResource("10_ycdy4")]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -23.9879, 1.00137e-06, 0.0613832)
+
+[node name="Root Scene5" parent="Root Scene/Root Scene7/Root Scene5/Root Scene5/Root Scene5" instance=ExtResource("10_ycdy4")]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0.049304, 1.00137e-06, -31.7096)
+
+[node name="Root Scene2" parent="." instance=ExtResource("9_kek77")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.58846, 0.165168, -12.122)
+
+[node name="Root Scene3" parent="." instance=ExtResource("12_w48qg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.4273, 1.00137e-06, -4.22004)
+
+[node name="Root Scene4" parent="." instance=ExtResource("13_vivmo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6011, 0.0146827, -7.99588)
+
+[node name="Root Scene5" parent="." instance=ExtResource("10_ycdy4")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.547443, 1.00137e-06, -4.17163)
+
+[node name="Root Scene5" parent="Root Scene5" instance=ExtResource("10_ycdy4")]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0.0149546, 1.00137e-06, -8.04429)
+
+[node name="Root Scene6" parent="." instance=ExtResource("9_ycdy4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.43934, 0, 0.911225)
+
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]
+[connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
